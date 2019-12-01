@@ -23,7 +23,7 @@ int fuel4fuel(int most_recent_fuel_calc, int sum_fuel) {
 }
 
 int main() {
-		auto start = std::chrono::high_resolution_clock::now();
+    auto start = std::chrono::high_resolution_clock::now();
 
     // Read in 100 masses
     std::vector<int> mass_vec;
