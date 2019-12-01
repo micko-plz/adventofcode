@@ -44,17 +44,17 @@ int main() {
 
     int sum_fuel;
     int sum_all_modules = 0;
-		double avg_time = 0.0;
+    double avg_time = 0.0;
     for (std::vector<int>::size_type i = 0; i != mass_vec.size(); ++i) {
         sum_fuel = 0;
         sum_all_modules += fuel4fuel(fuel_alg(mass_vec[i]), sum_fuel);
     }
 
-		auto stop = std::chrono::high_resolution_clock::now();
+    auto stop = std::chrono::high_resolution_clock::now();
     std::cout << sum_all_modules << std::endl;
 
-		auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-		std::cout << "Solution took: " << duration.count() << " microseconds." << std::endl;
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    std::cout << "Solution took: " << duration.count() << " microseconds." << std::endl;
     return 0;
 }
 
