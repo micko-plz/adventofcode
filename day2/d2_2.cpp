@@ -7,28 +7,24 @@ using namespace std;
 
 int getOutput(vector<int> csv, const int& input1, const int& input2) {
   
-  int num;
-  int pos1;
-  int pos2;
-  int pos3;
+  typedef vector<int>::iterator iter_t;
+  iter_t pos1;
+  iter_t pos2;
+  iter_t pos3;
+  iter_t begin = csv.begin();
   csv[1] = input1;
   csv[2] = input2;
 
-  for (vector<int>::size_type j; j < csv.size(); j+=4) 
+  for (iter_t iter = csv.begin(); iter != csv.end(); iter+=4) 
    {
-      num = csv[j];
-      pos1 = csv[j+1];
-      pos2 = csv[j+2];
-      pos3 = csv[j+3];
-
-      if (num == 1) {
-         csv[pos3] = csv[pos1] + csv[pos2]; 
+      if (*iter == 1) {
+         *(begin+*(iter+3)) = *(begin+*(iter+1)) + *(begin+*(iter+2)); 
       }
-      else if (num == 2)
+      else if (*iter == 2)
       {
-         csv[pos3] = csv[pos1] * csv[pos2];
+         *(begin+*(iter+3)) = *(begin+*(iter+1)) * *(begin+*(iter+2));
       }
-      else if (num == 99)
+      else if (*iter == 99)
       {
          break;
       }
