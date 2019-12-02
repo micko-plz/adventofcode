@@ -1,63 +1,65 @@
-#include <iostream>
 #include <fstream>
-#include <sstream>
 #include <vector>
-using namespace std;
+#include <iostream>
 #include <chrono>
 
-int getOutput(vector<int> csv, const int& input1, const int& input2) {
-  
-  int num;
-  int pos1;
-  int pos2;
-  int pos3;
-  csv[1] = input1;
-  csv[2] = input2;
 
-  for (vector<int>::size_type j; j < csv.size(); j+=4) 
-   {
-      num = csv[j];
-      pos1 = csv[j+1];
-      pos2 = csv[j+2];
-      pos3 = csv[j+3];
+void readInput(std::fstream& in, std::vector<int>& v)
+{
+	int number = 0;
+	char aux{};
 
-      if (num == 1) {
-         csv[pos3] = csv[pos1] + csv[pos2]; 
-      }
-      else if (num == 2)
-      {
-         csv[pos3] = csv[pos1] * csv[pos2];
-      }
-      else if (num == 99)
-      {
-         break;
-      }
-   }
-   return csv[0];
+	while (in >> number >> aux)
+	{
+		v.push_back(number);
+	}
+
+	in >> number;
+	v.push_back(number);
 }
+
 
 int main()
 {
-   auto start = chrono::high_resolution_clock::now();
-   // read in values to vector of ints
-   ifstream in;
-   string number;
-   vector<int> csvData;
-   in.open("Intcode.txt");
-   while( getline(in, number, ',') )
-   {
-      csvData.push_back(stoi(number));
-   }
-   in.close();
-   for (int input1 = 0; input1 < 100; ++input1) {
-     for (int input2 = 0; input2 < 100; ++input2) {
-       if (getOutput(csvData, input1, input2) == 19690720) {
-         auto stop = chrono::high_resolution_clock::now();
-         cout << input1 << " " << input2 << endl;
-         auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
-         std::cout << "Solution took: " << duration.count() << " microseconds." << std::endl;
-         return  0;
-       }
-     }
-   }
+   auto start = std::chrono::high_resolution_clock::now();
+	std::fstream in("Intcode.txt", std::fstream::in);
+	std::vector<int> v;
+
+	readInput(in, v);
+	std::vector<int> aux(v);
+
+	for (int noun = 0; noun < 100; noun++)
+	{
+		for (int verb = 0; verb < 100; verb++)
+		{
+			v = aux;
+			v[1] = noun;
+			v[2] = verb;
+
+			for (int currPos = 0; v[currPos] != 99; currPos += 4)
+			{
+				switch ((v[currPos]))
+				{
+				case 1:
+					v[v[currPos + 3]] = v[v[currPos + 1]] + v[v[currPos + 2]];
+					break;
+				case 2:
+					v[v[currPos + 3]] = v[v[currPos + 1]] * v[v[currPos + 2]];
+					break;
+				}
+			}
+
+			if (v[0] == 19690720)
+			{
+				std::cout << noun * 100 + verb;
+				noun = 100;
+				verb = 100;
+			}
+		}
+	}
+   auto stop = std::chrono::high_resolution_clock::now();
+   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+   std::cout << "Solution took: " << duration.count() << " microseconds." << std::endl;
+
+	in.close();
 }
