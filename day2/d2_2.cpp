@@ -38,7 +38,7 @@ int getOutput(vector<int> csv, const int& input1, const int& input2) {
 
 int main()
 {
-   auto start = std::chrono::high_resolution_clock::now();
+   auto start = chrono::high_resolution_clock::now();
    // read in values to vector of ints
    ifstream in;
    string number;
@@ -52,9 +52,9 @@ int main()
    for (int input1 = 0; input1 < 100; ++input1) {
      for (int input2 = 0; input2 < 100; ++input2) {
        if (getOutput(csvData, input1, input2) == 19690720) {
-         auto stop = std::chrono::high_resolution_clock::now();
+         auto stop = chrono::high_resolution_clock::now();
          cout << input1 << " " << input2 << endl;
-         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+         auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
          std::cout << "Solution took: " << duration.count() << " microseconds." << std::endl;
          return  0;
        }
