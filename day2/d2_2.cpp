@@ -4,62 +4,58 @@
 #include <chrono>
 
 
-void readInput(std::fstream& in, std::vector<int>& v)
+#include <bits/stdc++.h>
+
+
+#define COMPARE 19690720
+
+using namespace std;
+
+vector<int> arr;
+
+int run(int noun, int verb)
 {
-	int number = 0;
-	char aux{};
-
-	while (in >> number >> aux)
-	{
-		v.push_back(number);
-	}
-
-	in >> number;
-	v.push_back(number);
+    vector<int> cp(arr.begin(), arr.end());
+    cp[1] = noun;
+    cp[2] = verb;
+    for(int i=0;i<cp.size();i+=4){
+        int op = arr[i];
+        
+        if(op == 99)
+            break;
+        
+        int a = cp[i+1];
+        int b = cp[i+2];
+        int c = cp[i+3];
+        
+        cp[c] = op == 1 ? cp[a]+cp[b] : cp[a]*cp[b];
+    }
+    return cp[0];
 }
-
 
 int main()
 {
-   auto start = std::chrono::high_resolution_clock::now();
-	std::fstream in("Intcode.txt", std::fstream::in);
-	std::vector<int> v;
-
-	readInput(in, v);
-	std::vector<int> aux(v);
-
-	for (int noun = 0; noun < 100; noun++)
-	{
-		for (int verb = 0; verb < 100; verb++)
-		{
-			v = aux;
-			v[1] = noun;
-			v[2] = verb;
-
-			for (int currPos = 0; v[currPos] != 99; currPos += 4)
-			{
-				switch ((v[currPos]))
-				{
-				case 1:
-					v[v[currPos + 3]] = v[v[currPos + 1]] + v[v[currPos + 2]];
-					break;
-				case 2:
-					v[v[currPos + 3]] = v[v[currPos + 1]] * v[v[currPos + 2]];
-					break;
-				}
-			}
-
-			if (v[0] == 19690720)
-			{
-				std::cout << noun * 100 + verb;
-				noun = 100;
-				verb = 100;
-			}
-		}
-	}
-   auto stop = std::chrono::high_resolution_clock::now();
-   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-   std::cout << "Solution took: " << duration.count() << " microseconds." << std::endl;
-
-	in.close();
+    auto start = std::chrono::high_resolution_clock::now();
+    int n;
+    char c;
+    while(cin >> n){
+        arr.push_back(n);
+        cin >> c;
+    }
+    
+   //  cout << run(12,2) << endl;
+    
+    for(int i=0;i<100;i++){
+        for(int j=0;j<100;j++){
+            if(run(i,j) == COMPARE){
+                auto stop = std::chrono::high_resolution_clock::now();
+                cout << (100*i+j) << endl;
+                auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+                std::cout << "Solution took: " << duration.count() << " microseconds." << std::endl;
+                exit(0);
+            }
+        }
+    }
+    
+    return 0;
 }
