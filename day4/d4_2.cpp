@@ -27,6 +27,7 @@ bool notDecreasing(vector<int>& vec) {
 	}
 	return true;
 }
+
 bool has2repeat(vector<int> vec) {
   vector<int> vtemp;
   vtemp.push_back(vec[0]+1);
