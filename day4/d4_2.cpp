@@ -3,19 +3,10 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
-#include <cassert>
 
 using namespace std;
 
 typedef vector<int>::size_type vsize;
-
-
-void printvec(const vector<int>& v) {
-	for (vsize i = 0; i < v.size(); ++i) {
-		cout << v[i] << " " ;
-	}
-	cout << "\n";
-}
 
 vector<int> vecForm(int z) {
 	vector<int> vec;
@@ -28,15 +19,6 @@ vector<int> vecForm(int z) {
 		exp--;
 	}
 	return vec;
-}
-
-bool hasAdjacent(vector<int>& vec){
-	for (vsize i = 1; i < vec.size(); ++i) {
-		if (vec[i-1] == vec[i]) {
-			return true;
-		}
-	}
-	return false;
 }
 
 bool notDecreasing(vector<int>& vec) {
@@ -52,9 +34,10 @@ bool has2repeat(vector<int> vec) {
   vtemp.push_back(vec[vec.size()-1]+1);
   for (vsize i = 2; i < vec.size()+1; ++i) {
 	  if (vtemp[i-2] != vtemp[i-1] && vtemp[i-1] == vtemp[i] && vtemp[i] != vtemp[i+1] ) return true;
-}
+	}
   return false;
 }
+
 int main()
 {
 	auto start = chrono::high_resolution_clock::now();
