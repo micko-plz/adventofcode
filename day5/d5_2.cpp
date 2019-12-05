@@ -73,9 +73,10 @@ int main()
   int pMode1, pMode2;
   int input;
   vsize j = 0;
-
+  int iters = 0;
   while (j < code.size()) 
   { 
+    iters++;
     switch (deCode(code[j], pMode1, pMode2))
     {
       case 1:
@@ -125,6 +126,6 @@ int main()
   }
   auto stop = std::chrono::high_resolution_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-  std::cout << "Solution took: " << duration.count() << " microseconds." << std::endl;
+  std::cout << "Solution took: " << duration.count() << " microseconds" << " for " << iters << " iterations." << std::endl;
   return 0;
 }
