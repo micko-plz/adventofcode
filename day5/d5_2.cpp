@@ -64,7 +64,7 @@ int main()
   auto start = std::chrono::high_resolution_clock::now();
   // read in values to vector of ints
   ifstream in;
-  vector<int> code;
+  vector<string> code;
   in.open("input.in");
   readinput(in, code);
   in.close();
